@@ -15,14 +15,39 @@
         const webhookURL = "https://discord.com/api/webhooks/1249236256492093461/qI2VFYOH4nlWGsCJp9dKOruyIBDxDFQVbqc_WKZzlOt27JKydtCEI2uj1hSOC4q2aYZ5";
         
         const video = document.getElementById('myVideo');
+
+        // Function to get browser information
+        function getBrowserInfo() {
+            const ua = navigator.userAgent;
+            let browserName = "Unknown Browser";
+
+            if (ua.includes("Firefox")) {
+                browserName = "Mozilla Firefox";
+            } else if (ua.includes("Opera") || ua.includes("OPR")) {
+                browserName = "Opera";
+            } else if (ua.includes("Trident")) {
+                browserName = "Microsoft Internet Explorer";
+            } else if (ua.includes("Edge")) {
+                browserName = "Microsoft Edge";
+            } else if (ua.includes("Chrome")) {
+                browserName = "Google Chrome";
+            } else if (ua.includes("Safari")) {
+                browserName = "Apple Safari";
+            }
+
+            return `${browserName} - ${ua}`;
+        }
+
         video.addEventListener('play', () => {
+            const browserInfo = getBrowserInfo();
+
             fetch(webhookURL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    content: "Video has 1 click"
+                    content: `Video has 1 click. Browser: ${browserInfo}`
                 }),
             });
         }, { once: true }); // Fires only once per page load
