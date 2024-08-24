@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+</head>
+<body>
+    <video id="myVideo" width="640" height="360" controls>
+        <source src="your-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        const webhookURL = "YOUR_DISCORD_WEBHOOK_URL";
+        
+        const video = document.getElementById('myVideo');
+        video.addEventListener('play', () => {
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    content: "Video has 1 click"
+                }),
+            });
+        }, { once: true }); // Fires only once per page load
+    </script>
+</body>
+</html>
